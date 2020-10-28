@@ -1,9 +1,9 @@
-import os from 'os';
+import * as os from 'os';
 
 /**
  * 获取本地网卡的IPv4和IPv6地址，本地回环地址127和::1除外
  */
-function ip() {
+function ip(): { ipv4: string[], ipv6: string[] } {
     let nis = os.networkInterfaces();
     let ips = { ipv4: [], ipv6: [], };
     for (let name in nis) {

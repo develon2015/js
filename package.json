@@ -2,8 +2,7 @@
   "name": "@develon/js",
   "version": "1.0.0",
   "description": "js library of Node.js and Web platform.",
-  "main": "dist",
-  "workspaces":["dist"],
+  "main": "./lib",
   "scripts": {
     "start:dev": "node-dev-server ."
   },
@@ -20,5 +19,15 @@
   "bugs": {
     "url": "https://github.com/develon2015/js/issues"
   },
-  "homepage": "https://github.com/develon2015/js#readme"
+  "homepage": "https://github.com/develon2015/js#readme",
+  "dependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "babel-loader": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.5"
+  }
 }

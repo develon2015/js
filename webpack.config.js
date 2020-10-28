@@ -23,7 +23,7 @@ function getWebpackConfigByName(projectName) {
         module: {
             rules: [
                 {
-                //    test: /\.(js|ts)$/, use: 'babel-loader', // 从babel配置文件读取options
+                   test: /\.(js|ts)$/, use: 'babel-loader', // 从babel配置文件读取options
                 },
             ],
         },
