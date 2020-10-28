@@ -1,5 +1,7 @@
 import ip from './ip';
 import fetchPublicIP from './public_ip';
 
-export { ip, fetchPublicIP, }; // cjs导出
-export default { ip, fetchPublicIP, }; // 默认导出
+// cjs导出
+export { ip, fetchPublicIP, };
+// 默认导出
+export default { ip, fetchPublicIP, };

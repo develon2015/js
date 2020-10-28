@@ -1,14 +1,18 @@
 {
   "name": "@develon/js",
   "version": "1.0.0",
-  "description": "None.",
+  "description": "js library of Node.js and Web platform.",
   "main": "dist",
+  "workspaces":["dist"],
   "scripts": {
     "start:dev": "node-dev-server ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/develon2015/js.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [],
   "author": "develon",

@@ -4,7 +4,7 @@ const projectName = '.';
 function getWebpackConfigByName(projectName) {
     const DIR_PROJECT = path.resolve(__dirname, projectName);
     const DIR_SRC = path.resolve(DIR_PROJECT, 'src');
-    const DIR_DIST = path.resolve(DIR_PROJECT, 'dist');
+    const DIR_DIST = path.resolve(DIR_PROJECT, 'lib');
 
     const config = {
         target: 'node', // webpack默认构建目标是web，我们需要构建的是后端应用
@@ -18,6 +18,7 @@ function getWebpackConfigByName(projectName) {
         output: {
             filename: '[name]/index.js',
             path: DIR_DIST,
+            libraryTarget: 'umd', // 包括var（默认值，用于web场景）、commonjs[2]、amd等选项
         },
         module: {
             rules: [
