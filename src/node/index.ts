@@ -4,6 +4,7 @@
 
 // 网络相关API
 // 分别使用cjs路由、默认路由两种方式导出
+import network from './network';
 export * from './network';
 // export { default } from './network'; // 不可以多次使用该语法
 
@@ -15,4 +16,8 @@ module.exports = {
     ...require('./console'), // 控制台相关API
 }; // 不可以合并default字段
 */
+import _console from './console';
 export * from './console';
+
+// 默认导出
+export default { ...network, ..._console, };
