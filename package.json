@@ -2,8 +2,10 @@
   "name": "@develon/js",
   "version": "1.0.5",
   "description": "js library of Node.js and Web platform.",
-  "main": "./lib",
+  "main": "./lib/common/index.js",
+  "types": "./lib/common/index.d.ts",
   "scripts": {
+    "build": "rm -rf lib && tsc --build ./tsconfig.build.json",
     "start:dev": "node-dev-server ."
   },
   "repository": {

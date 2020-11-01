@@ -4,15 +4,16 @@ const projectName = '.';
 function getWebpackConfigByName(projectName) {
     const DIR_PROJECT = path.resolve(__dirname, projectName);
     const DIR_SRC = path.resolve(DIR_PROJECT, 'src');
-    const DIR_DIST = path.resolve(DIR_PROJECT, 'lib');
+    const DIR_DIST = path.resolve(DIR_PROJECT, 'test');
 
     const config = {
         target: 'node', // webpack默认构建目标是web，我们需要构建的是后端应用
         mode: 'none', // 开发模式编译速度最快，但文件体积较大
         entry: {
-            common: path.resolve(DIR_SRC, 'common/index'),
-            node: path.resolve(DIR_SRC, 'node/index'),
-            web: path.resolve(DIR_SRC, 'web/index'),
+            // 发布构建的工作应该由tsc完成, 而不是nds或webpack
+            // common: path.resolve(DIR_SRC, 'common/index'),
+            // node: path.resolve(DIR_SRC, 'node/index'),
+            // web: path.resolve(DIR_SRC, 'web/index'),
             '/': path.resolve(DIR_SRC, 'test'), // root test
         },
         output: {
