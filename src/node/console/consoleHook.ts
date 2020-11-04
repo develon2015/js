@@ -1,10 +1,12 @@
 require('colors');
-const _log = console.log;
-const _info = console.info;
-const _warn = console.warn;
-const _error = console.error;
+const log = console.log;
+const info = console.info;
+const warn = console.warn;
+const error = console.error;
 
 function stringify(obj) {
+    if (obj === null) return '[null]';
+    if (obj === undefined) return '[undefined]';
     switch (obj && obj.constructor) {
         case String: {
             return obj;
@@ -34,22 +36,25 @@ function stringify(obj) {
     }
 }
 
+let inited = false;
 function hook() {
+    if (inited) return;
+    inited = true;
     console.log = (...params) => {
         let color = 'brightGreen';
-        _log('[V]'[color], ...(params.map(it => stringify(it)[color])));
+        log('[V]'[color], ...(params.map(it => stringify(it)[color])));
     };
     console.info = (...params) => {
         let color = 'brightMagenta';
-        _info('[I]'[color], ...(params.map(it => stringify(it)[color])));
+        info('[I]'[color], ...(params.map(it => stringify(it)[color])));
     };
     console.warn = (...params) => {
         let color = 'yellow';
-        _warn('[W]'[color], ...(params.map(it => stringify(it)[color])));
+        warn('[W]'[color], ...(params.map(it => stringify(it)[color])));
     };
     console.error = (...params) => {
         let color = 'brightRed';
-        _error('[E]'[color], ...(params.map(it => stringify(it)[color])));
+        error('[E]'[color], ...(params.map(it => stringify(it)[color])));
     };
 }
 
@@ -64,6 +69,6 @@ void function test() {
 // ();
 
 export default {
-    _log, _info, _error, _warn,
+    log, info, error, warn,
     hook,
 };
