@@ -11,3 +11,9 @@ import node, { _console } from './node';
 node._console.hook();
 _console.hook();
 console.log(`require('./node') =>`, require('./node'));
+
+import { isSupportedRange } from './node';
+let url = 'https://avatars1.githubusercontent.com/u/27133157?s=64&v=4';
+isSupportedRange(url).then(bool => {
+    console.log(`${url} ${bool ? '' : '不'}支持断点续传!`);
+})
