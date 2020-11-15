@@ -5,7 +5,8 @@
   "main": "./lib/common/index.js",
   "types": "./lib/common/index.d.ts",
   "scripts": {
-    "build": "rm -rf lib && tsc --build ./tsconfig.build.json",
+    "build": "tsc --build ./tsconfig.build.json",
+    "rebuild": "rm -rf lib && tsc --build ./tsconfig.build.json",
     "start:dev": "node-dev-server ."
   },
   "repository": {

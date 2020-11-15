@@ -6,8 +6,7 @@ import { URL } from 'url';
  * 判断url是否支持范围请求
  * @param url 
  */
-export default 
-function isSupportedRange(url: URL | string): Promise<boolean> {
+export function isSupportedRange(url: URL | string): Promise<boolean> {
     return new Promise((resolve, reject) => {
         if (typeof url === 'string') url = new URL(url);
         const options: http.RequestOptions = {

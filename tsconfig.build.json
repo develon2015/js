@@ -2,7 +2,9 @@
     "extends": "./tsconfig.json",
     "exclude": ["./src/test.ts"], // test.ts由node-dev-server使用
     "compilerOptions": {
-        "module": "UMD",
+        "module": "CommonJS",
         "outDir": "./lib",
+        "declaration": true,
+        "declarationDir": "./lib",
     },
 }

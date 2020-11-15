@@ -1,8 +1,7 @@
 require('colors');
-const log = console.log;
-const info = console.info;
-const warn = console.warn;
-const error = console.error;
+/** 原生控制台对象 */
+let _console = globalThis.console;
+let console = { ..._console };
 
 function stringify(obj) {
     if (obj === null) return '[null]';
@@ -37,25 +36,29 @@ function stringify(obj) {
 }
 
 let inited = false;
-function hook() {
+/**
+ * 重载console.log()等方法, 从而支持颜色等特性.
+ */
+export function hook() {
     if (inited) return;
     inited = true;
     console.log = (...params) => {
         let color = 'brightGreen';
-        log('[V]'[color], ...(params.map(it => stringify(it)[color])));
+        _console.log('[V]'[color], ...(params.map(it => stringify(it)[color])));
     };
     console.info = (...params) => {
         let color = 'brightMagenta';
-        info('[I]'[color], ...(params.map(it => stringify(it)[color])));
+        _console.info('[I]'[color], ...(params.map(it => stringify(it)[color])));
     };
     console.warn = (...params) => {
         let color = 'yellow';
-        warn('[W]'[color], ...(params.map(it => stringify(it)[color])));
+        _console.warn('[W]'[color], ...(params.map(it => stringify(it)[color])));
     };
     console.error = (...params) => {
         let color = 'brightRed';
-        error('[E]'[color], ...(params.map(it => stringify(it)[color])));
+        _console.error('[E]'[color], ...(params.map(it => stringify(it)[color])));
     };
+    globalThis.console = console;
 }
 
 void function test() {
@@ -68,7 +71,4 @@ void function test() {
 }
 // ();
 
-export default {
-    log, info, error, warn,
-    hook,
-};
+export { _console as native };

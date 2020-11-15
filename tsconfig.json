@@ -2,11 +2,9 @@
     "include": ["./src"],
     "compilerOptions": {
         "target": "ES6",
-        "lib": ["ES6"],
+        "lib": ["ES6", "DOM"],
         "module": "CommonJS",
         "moduleResolution": "Node",
-        "declaration": true,
-        "declarationDir": "./lib",
         "outDir": "./test",
     },
 }
