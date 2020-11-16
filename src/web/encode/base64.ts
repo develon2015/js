@@ -9,8 +9,22 @@ export function ArrayBuffer2Base64(buffer: ArrayBuffer): string {
     var binary = '';
     var bytes = new Uint8Array(buffer);
     var len = bytes.byteLength;
+    // 将原始二进制数据按字节转换, 拼接为二进制字符串
     for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]); // 将原始二进制数据按字节转换, 拼接为二进制字符串
+        if (len - i > 70) { // 减少binary拼接次数
+          binary += String.fromCharCode(bytes[i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i],
+            bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i],
+            bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i],
+            bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i],
+            bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i],
+            bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i],
+            bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i], bytes[++i],
+          );
+        } else if (len - i > 5) { // 减少binary拼接次数
+            binary += String.fromCharCode(bytes[i], bytes[++i], bytes[++i], bytes[++i], bytes[++i]);
+        } else {
+            binary += String.fromCharCode(bytes[i]);
+        }
     }
     return window.btoa(binary);
 }
