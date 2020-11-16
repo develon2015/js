@@ -1,5 +1,3 @@
-import { builtinModules } from "module";
-
 /**
  * 很明显，有时候JavaScript代码需要快速并轻松处理原始二进制数据。
  * 过去，必须通过将原始数据视为字符串并使用该charCodeAt()方法从数据缓冲区读取字节来模拟这种情况。

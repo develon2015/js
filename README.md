@@ -1,6 +1,6 @@
 ## Description
 
-None.
+构建Web平台和Node.js平台上通用或特有的JavaScript API.
 
 ## Install
 

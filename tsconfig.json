@@ -6,5 +6,9 @@
         "module": "CommonJS",
         "moduleResolution": "Node",
         "outDir": "./test",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"], // tsc不处理别名! 运行时无法找到模块, 需要使用第三方包--module-alias
+        },
     },
 }

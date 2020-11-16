@@ -1,1 +1,2 @@
-export * as encode from './base64';
+export * from './base64';
+export * from '../../common/encode';

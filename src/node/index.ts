@@ -1,6 +1,7 @@
 /*
  * 以cjs和default两种方式导出Node.js平台相关API
  */
+export * from '../common';
 
 // 网络相关API
 // 分别使用cjs路由、默认路由两种方式导出
