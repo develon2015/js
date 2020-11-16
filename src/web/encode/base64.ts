@@ -46,3 +46,22 @@ export async function Blob2Base64(blob: Blob): Promise<string> {
 export async function String2Base64(str: string): Promise<string> {
     return Blob2Base64(new Blob([str]));
 }
+
+import { Base64ToDataURL } from '../../common/encode/base64';
+/**
+ * Base64字符串创建blob URL
+ * @param base64 
+ * @param type 
+ */
+export async function Base64ToObjectURL(base64: string, type: string = 'application/octet-stream'): Promise<string> {
+    return DataURL2ObjectURL(Base64ToDataURL(base64, type));
+}
+
+/**
+ * 使用Base64编码的DataURL创建blob URL
+ * @param data 
+ */
+export async function DataURL2ObjectURL(data: string): Promise<string> {
+    let blob: Blob = await (await fetch(data)).blob();
+    return URL.createObjectURL(blob);
+}
