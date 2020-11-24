@@ -6,8 +6,9 @@
         [
             "@babel/preset-env",
             {
+                "useBuiltIns": false,
                 "targets": {
-                    "node": "12.19.0"
+                    "esmodules": true
                 }
             }
         ],
