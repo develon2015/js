@@ -65,3 +65,61 @@ export async function DataURL2ObjectURL(data: string): Promise<string> {
     let blob: Blob = await (await fetch(data)).blob();
     return URL.createObjectURL(blob);
 }
+
+/*\
+|*|
+|*|  Base64 / binary data / UTF-8 strings utilities (#3)
+|*|
+|*|  https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
+|*|
+|*|  Author: madmurphy
+|*|
+\*/
+
+/**
+ * UTF-8字符串转为以UTF-16（LE）编码存储的Base64编码
+ * 
+ * MDN解决方案＃3 JavaScript的UTF-16 =>二进制字符串=> base64
+ * 
+ * 存在长度限制（调用栈限制）
+ * @param sString 
+ */
+export function btoaUTF16(sString: string) {
+    var aUTF16CodeUnits = new Uint16Array(sString.length);
+    Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
+    return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+}
+
+export function atobUTF16(sBase64: string) {
+    var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
+    Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
+    return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+}
+
+/**
+ * MDN解决方案＃4 –在编码之前先转义字符串
+ * 
+ * `btoa()`函数的UTF-8支持
+ */
+export function b2a(binary: string) {
+    // first we use encodeURIComponent to get percent-encoded UTF-8,
+    // then we convert the percent encodings into raw bytes which can be fed into btoa.
+    return btoa(encodeURIComponent(binary)/*%xx%xx%xx*/.replace(/%([0-9A-F]{2})/g,
+        function toSolidBytes(match, p1) {
+            return String.fromCharCode(Number.parseInt('0x' + p1));
+        })
+    );
+}
+
+/**
+ * MDN解决方案＃4 –在编码之前先转义字符串
+ * 
+ * `atob()`函数的UTF-8支持
+ * @param ascii 
+ */
+export function a2b(ascii: string) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(ascii).split('').map(c => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
