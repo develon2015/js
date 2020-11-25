@@ -1,3 +1,7 @@
+import { Base64ToDataURL } from '../../common/encode/base64';
+import { String2BinaryView } from './String2BinaryView';
+import { UTF8ToUTF16 } from './UTF8ToUTF16';
+
 /**
  * 很明显，有时候JavaScript代码需要快速并轻松处理原始二进制数据。
  * 过去，必须通过将原始数据视为字符串并使用该charCodeAt()方法从数据缓冲区读取字节来模拟这种情况。
@@ -47,7 +51,6 @@ export async function String2Base64(str: string): Promise<string> {
     return Blob2Base64(new Blob([str]));
 }
 
-import { Base64ToDataURL } from '../../common/encode/base64';
 /**
  * Base64字符串创建blob URL
  * @param base64 
@@ -85,15 +88,30 @@ export async function DataURL2ObjectURL(data: string): Promise<string> {
  * @param sString 
  */
 export function btoaUTF16(sString: string) {
-    var aUTF16CodeUnits = new Uint16Array(sString.length);
-    Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
-    return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+    // var aUTF16CodeUnits = new Uint16Array(sString.length);
+    // Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
+    // return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+    const uint16: Uint16Array = UTF8ToUTF16(sString);
+    const buffer: ArrayBuffer = uint16.buffer;
+    return ArrayBuffer2Base64(buffer);
 }
 
 export function atobUTF16(sBase64: string) {
-    var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
-    Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
-    return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+    // var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
+    // Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
+    // return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+    const binaryStr: string = atob(sBase64); // UTF16编码，要转UTF-8
+    let decodeStr = '';
+    let uint16 = new Uint16Array(binaryStr.length);
+    String2BinaryView(binaryStr).then(r => {
+        console.log(r);
+    })
+    let length = binaryStr.length;
+    for (let i = 0; i < length; i++) {
+        // uint16[i] = 
+        // decodeStr += String.fromCharCode();
+    }
+    return decodeStr;
 }
 
 /**
