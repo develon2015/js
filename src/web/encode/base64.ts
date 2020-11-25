@@ -96,20 +96,19 @@ export function btoaUTF16(sString: string) {
     return ArrayBuffer2Base64(buffer);
 }
 
-export function atobUTF16(sBase64: string) {
+export function atobUTF16(sBase64: string): string {
     // var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
     // Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
     // return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
     const binaryStr: string = atob(sBase64); // UTF16编码，要转UTF-8
     let decodeStr = '';
-    let uint16 = new Uint16Array(binaryStr.length);
-    String2BinaryView(binaryStr).then(r => {
-        console.log(r);
-    })
-    let length = binaryStr.length;
-    for (let i = 0; i < length; i++) {
-        // uint16[i] = 
-        // decodeStr += String.fromCharCode();
+    let uint8 = new Uint8Array(binaryStr.length);
+    for (let i = 0; i < uint8.length; i++) {
+        uint8[i] = binaryStr.charCodeAt(i);
+    }
+    let uint16 = new Uint16Array(uint8.buffer);
+    for (let i = 0; i < uint16.length; i++) {
+        decodeStr += String.fromCharCode(uint16[i]);
     }
     return decodeStr;
 }
