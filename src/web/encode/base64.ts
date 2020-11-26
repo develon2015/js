@@ -84,13 +84,14 @@ export async function DataURL2ObjectURL(data: string): Promise<string> {
  * 
  * MDN解决方案＃3 JavaScript的UTF-16 =>二进制字符串=> base64
  * 
- * 存在长度限制（调用栈限制）
+ * 存在长度限制（调用栈限制）（已修复）
  * @param sString 
  */
 export function btoaUTF16(sString: string) {
     // var aUTF16CodeUnits = new Uint16Array(sString.length);
     // Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
     // return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+
     const uint16: Uint16Array = UTF8ToUTF16(sString);
     const buffer: ArrayBuffer = uint16.buffer;
     return ArrayBuffer2Base64(buffer);
@@ -100,13 +101,30 @@ export function atobUTF16(sBase64: string): string {
     // var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
     // Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
     // return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+
+    /* view: Array(6) 示例：四字节字符'\u{2F804}'的UTF-16+Base64经过atob解码后的binaryStr视图
+        0: "0B01111110" => 126
+        1: "0B11000011" => 216(UTF-8)
+        2: "0B10011000"
+        3: "0B00000100" => 4
+        4: "0B11000011" => 220
+        5: "0B10011100" */
     const binaryStr: string = atob(sBase64); // UTF16编码，要转UTF-8
     let decodeStr = '';
+    // btoaUTF16('\u{2F804}') => "ftgE3A==" => atobUTF16('ftgE3A==') => {binaryStr: "~ØÜ", length: 4}
     let uint8 = new Uint8Array(binaryStr.length);
     for (let i = 0; i < uint8.length; i++) {
         uint8[i] = binaryStr.charCodeAt(i);
     }
+    /* uint8: Uint8Array(4)
+        0: 126 => 01111110
+        1: 216 => 11011000
+        2: 4   => 00000100
+        3: 220 => 11011100 */
     let uint16 = new Uint16Array(uint8.buffer);
+    /* uint16: Uint16Array(2)
+        0: 55422 => 0B11011000_01111110
+        1: 56324 => 0B11011100_00000100 */
     for (let i = 0; i < uint16.length; i++) {
         decodeStr += String.fromCharCode(uint16[i]);
     }
