@@ -23,3 +23,5 @@ export * as console from './console';
 
 // 默认导出
 // export default { ...network, ..._console, }; // 放弃默认导出
+
+export * as encode from './encode';

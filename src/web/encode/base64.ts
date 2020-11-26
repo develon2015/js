@@ -1,6 +1,4 @@
-import { Base64ToDataURL } from '../../common/encode/base64';
-import { String2BinaryView } from './String2BinaryView';
-import { UTF8ToUTF16 } from './UTF8ToUTF16';
+import { Base64ToDataURL, UTF8ToUTF16 } from './';
 
 /**
  * 很明显，有时候JavaScript代码需要快速并轻松处理原始二进制数据。
