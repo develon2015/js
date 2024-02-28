@@ -1,6 +1,6 @@
 {
   "name": "@develon/js",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "js library of Node.js and Web platform.",
   "main": "./lib/common/index.js",
   "types": "./lib/common/index.d.ts",
